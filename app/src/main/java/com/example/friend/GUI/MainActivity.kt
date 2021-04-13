@@ -1,6 +1,9 @@
 package com.example.friend.GUI
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import com.example.friend.Data.BEFriend
@@ -9,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.appcompat.app.AppCompatActivity
 import com.example.friend.Data.observeOnce
 import com.example.friend.R
+import java.time.LocalDate
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,11 +24,36 @@ class MainActivity : AppCompatActivity() {
         setupDataObserver()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id: Int = item.getItemId()
+        when (id) {
+            R.id.openList -> {
+                //go to main activity, if on other page
+                Toast.makeText(this, "Open List", Toast.LENGTH_LONG).show()
+                true
+            }
+            R.id.newFriend -> {
+                //go to "create new" activity
+                Toast.makeText(this, "New Friend Creation", Toast.LENGTH_LONG).show()
+                val intent = Intent(this, DetailsActivity::class.java).also {
+                    startActivity(it)
+                }
+                true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun insertTestData() {
         val mRep = FriendRepositoryInDB.get()
-        mRep.insert(BEFriend(0,"Rip", "01040705",true))
-        mRep.insert(BEFriend(0,"Rap", "01010101", false))
-        mRep.insert(BEFriend(0,"Rup", "10101010", false))
+        mRep.insert(BEFriend(0,"Rip", "01040705","stranger@email.com","github.com/stranger", true))
+        mRep.insert(BEFriend(0,"Rap", "01010101", "stranger@email.com","github.com/stranger",false))
+        mRep.insert(BEFriend(0,"Rup", "10101010", "stranger@email.com","github.com/stranger",false))
     }
     var cache: List<BEFriend>? = null;
 
@@ -45,12 +74,16 @@ class MainActivity : AppCompatActivity() {
         lvNames.onItemClickListener = AdapterView.OnItemClickListener {_,_,pos,_ -> onClickFriend(pos)}
     }
 
+
     private fun onClickFriend(pos: Int) {
         val id = cache!![pos].id
         val friendObserver = Observer<BEFriend> { friend ->
             if  (friend != null)
             {
-                Toast.makeText(this, "You have selected ${friend.name} ", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, DetailsActivity::class.java).also {
+                    it.putExtra("position", id)
+                    startActivity(it)
+                }
             }
         }
         val mRep = FriendRepositoryInDB.get()
@@ -62,21 +95,4 @@ class MainActivity : AppCompatActivity() {
         mRep.clear()
     }
 
-
-
-    /*private fun asListMap(src: Array<BEFriend>): List<Map<String, String?>> {
-
-        return src.map{ person -> hashMapOf("name" to person.name, "phone" to person.phone) }
-    }*/
-
-
-    /*override fun onListItemClick(
-            parent: ListView?,
-            v: View?, position: Int, id: Long
-    ) {
-        val intent = Intent(this, DetailsActivity::class.java).also {
-            it.putExtra("position", position)
-            startActivity(it)
-        }
-    }*/
 }

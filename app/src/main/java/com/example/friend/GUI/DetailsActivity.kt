@@ -5,8 +5,11 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.friend.Data.FriendRepositoryInDB
 import com.example.friend.Data.OUTDATEDFriends
 import com.example.friend.R
+import androidx.lifecycle.Observer
+import com.example.friend.Data.BEFriend
 
 class DetailsActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,16 +22,19 @@ class DetailsActivity : AppCompatActivity(){
 
         val position = intent.getIntExtra("position", -1)
         if (position >= 0) {
-            val friend = OUTDATEDFriends().getFriend(position)
+            val mRep = FriendRepositoryInDB.get()
             val friendName: TextView = findViewById(R.id.friendName)
-            friendName.text = friend.name
             val friendNumber: TextView = findViewById(R.id.friendPhone)
-            friendNumber.text = friend.phone
+            val nameObserver = Observer<BEFriend> { friend ->
+                friendName.text = friend.name;
+                friendNumber.text = friend.phone;
+
+            }
+            mRep.getById(position).observe(this, nameObserver)
         }
         else
         {
-            val toast = Toast.makeText(applicationContext,"Could not load Friend, sorry", Toast.LENGTH_LONG)
-            toast.show()
+
         }
     }
 }

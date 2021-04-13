@@ -5,42 +5,11 @@
     android:layout_height="fill_parent">
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
-
-        <EditText
-            android:id="@+id/etName"
-            android:layout_width="200px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/btnInsert"
-            android:layout_width="124dp"
-            android:layout_height="wrap_content"
-            android:height="30px"
-            android:text="Insert"
-            android:enabled="true"
-            android:onClick="onClickInsert"/>
-
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/linearLayout2"
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal" >
-
-        <Button
-            android:id="@+id/btnClear"
-            android:layout_width="124dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:text="Clear"
-            android:onClick="onClickClear"/>
-
     </LinearLayout>
 
     <ListView
