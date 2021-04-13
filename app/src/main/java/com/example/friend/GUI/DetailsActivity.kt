@@ -5,7 +5,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.friend.Data.Friends
+import com.example.friend.Data.OUTDATEDFriends
 import com.example.friend.R
 
 class DetailsActivity : AppCompatActivity(){
@@ -19,7 +19,7 @@ class DetailsActivity : AppCompatActivity(){
 
         val position = intent.getIntExtra("position", -1)
         if (position >= 0) {
-            val friend = Friends().getFriend(position)
+            val friend = OUTDATEDFriends().getFriend(position)
             val friendName: TextView = findViewById(R.id.friendName)
             friendName.text = friend.name
             val friendNumber: TextView = findViewById(R.id.friendPhone)

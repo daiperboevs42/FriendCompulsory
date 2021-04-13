@@ -1,6 +1,6 @@
 package com.example.friend.Data
 
-class Friends {
+class OUTDATEDFriends {
 
     val mFriends = arrayOf<BEFriend>(
     )
