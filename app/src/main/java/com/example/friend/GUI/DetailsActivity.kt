@@ -45,6 +45,7 @@ class DetailsActivity : AppCompatActivity(){
             val friendWebsite: TextView = findViewById(R.id.friendWebsite)
             val friendBest: CheckBox = findViewById(R.id.bestFriend)
             val saveFriend: Button = findViewById(R.id.saveFriend)
+            val deleteFriend: Button = findViewById(R.id.deleteFriend)
             val nameObserver = Observer<BEFriend> { friend ->
                 friendName.text = friend.name;
                 friendNumber.text = friend.phone;
@@ -53,6 +54,7 @@ class DetailsActivity : AppCompatActivity(){
                 friendBest.isChecked = friend.isFavorite;
             }
             saveFriend.text = "Update Friend"
+            deleteFriend.visibility = View.VISIBLE
             mRep.getById(position).observe(this, nameObserver)
         }
     }
@@ -117,6 +119,24 @@ class DetailsActivity : AppCompatActivity(){
             Toast.makeText(this, "${friend.name} has been created", Toast.LENGTH_SHORT).show()
             finish()
         }
+    }
+
+    fun onClickDeleteFriend(view: View){
+        val mRep = FriendRepositoryInDB.get()
+        val friendName: TextView = findViewById(R.id.friendName)
+        val friendNumber: TextView = findViewById(R.id.friendPhone)
+        val friendEmail: TextView = findViewById(R.id.friendEmail)
+        val friendWebsite: TextView = findViewById(R.id.friendWebsite)
+        val friendBest: CheckBox = findViewById(R.id.bestFriend)
+        val friend = BEFriend(friendID,
+            friendName.text.toString(),
+            friendNumber.text.toString(),
+            friendEmail.text.toString(),
+            friendWebsite.text.toString(),
+            friendBest.isChecked,
+        )
+        mRep.delete(friend)
+        finish()
     }
 
     @SuppressLint("MissingPermission")

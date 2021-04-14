@@ -159,5 +159,13 @@
             android:onClick="onClickSaveFriend"
             android:text="Save Friend" />
 
+        <Button
+            android:id="@+id/deleteFriend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClickDeleteFriend"
+            android:text="Delete Friend"
+            android:visibility="gone"/>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
