@@ -11,6 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -20,7 +21,8 @@ import androidx.lifecycle.Observer
 import com.example.friend.Data.BEFriend
 
 class DetailsActivity : AppCompatActivity(){
-    private var friendLoaded = false;
+    private var friendLoaded = false
+    private var friendID = 0
     private val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,
     Manifest.permission.ACCESS_COARSE_LOCATION)
 
@@ -35,19 +37,23 @@ class DetailsActivity : AppCompatActivity(){
         val position = intent.getIntExtra("position", -1)
         if (position >= 0) {
             friendLoaded = true
+            friendID = position
             val mRep = FriendRepositoryInDB.get()
             val friendName: TextView = findViewById(R.id.friendName)
             val friendNumber: TextView = findViewById(R.id.friendPhone)
+            val friendEmail: TextView = findViewById(R.id.friendEmail)
+            val friendWebsite: TextView = findViewById(R.id.friendWebsite)
+            val friendBest: CheckBox = findViewById(R.id.bestFriend)
+            val saveFriend: Button = findViewById(R.id.saveFriend)
             val nameObserver = Observer<BEFriend> { friend ->
                 friendName.text = friend.name;
                 friendNumber.text = friend.phone;
-
+                friendEmail.text = friend.email;
+                friendWebsite.text = friend.website;
+                friendBest.isChecked = friend.isFavorite;
             }
+            saveFriend.text = "Update Friend"
             mRep.getById(position).observe(this, nameObserver)
-        }
-        else
-        {
-            //add textAreas and make sure they're blank here
         }
     }
 
@@ -86,7 +92,33 @@ class DetailsActivity : AppCompatActivity(){
         }
         return super.onOptionsItemSelected(item)
     }
-    
+
+     fun onClickSaveFriend(view: View) {
+        val mRep = FriendRepositoryInDB.get()
+        val friendName: TextView = findViewById(R.id.friendName)
+        val friendNumber: TextView = findViewById(R.id.friendPhone)
+        val friendEmail: TextView = findViewById(R.id.friendEmail)
+        val friendWebsite: TextView = findViewById(R.id.friendWebsite)
+        val friendBest: CheckBox = findViewById(R.id.bestFriend)
+        val friend = BEFriend(friendID,
+            friendName.text.toString(),
+            friendNumber.text.toString(),
+            friendEmail.text.toString(),
+            friendWebsite.text.toString(),
+            friendBest.isChecked,
+            )
+
+        if (friendLoaded){
+            mRep.update(friend)
+            Toast.makeText(this, "${friend.name} has been updated", Toast.LENGTH_SHORT).show()
+            finish()
+        }else{
+            mRep.insert(friend)
+            Toast.makeText(this, "${friend.name} has been created", Toast.LENGTH_SHORT).show()
+            finish()
+        }
+    }
+
     @SuppressLint("MissingPermission")
     fun onClickLocation(view: View){
         if (!isPermissionGiven()){
