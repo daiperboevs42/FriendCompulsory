@@ -70,5 +70,12 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/getLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get Location"
+            android:onClick="onClickLocation"/>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,7 +12,6 @@ import androidx.lifecycle.Observer
 import androidx.appcompat.app.AppCompatActivity
 import com.example.friend.Data.observeOnce
 import com.example.friend.R
-import java.time.LocalDate
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,13 +32,12 @@ class MainActivity : AppCompatActivity() {
         val id: Int = item.getItemId()
         when (id) {
             R.id.openList -> {
-                //go to main activity, if on other page
-                Toast.makeText(this, "Open List", Toast.LENGTH_LONG).show()
+                //go to main activity
+                Toast.makeText(this, "Already on List Page", Toast.LENGTH_LONG).show()
                 true
             }
             R.id.newFriend -> {
                 //go to "create new" activity
-                Toast.makeText(this, "New Friend Creation", Toast.LENGTH_LONG).show()
                 val intent = Intent(this, DetailsActivity::class.java).also {
                     startActivity(it)
                 }
@@ -51,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun insertTestData() {
         val mRep = FriendRepositoryInDB.get()
-        mRep.insert(BEFriend(0,"Rip", "01040705","stranger@email.com","github.com/stranger", true))
+        mRep.insert(BEFriend(0,"Rip", "01040705", "stranger@email.com","github.com/stranger", true))
         mRep.insert(BEFriend(0,"Rap", "01010101", "stranger@email.com","github.com/stranger",false))
         mRep.insert(BEFriend(0,"Rup", "10101010", "stranger@email.com","github.com/stranger",false))
     }
