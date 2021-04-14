@@ -3,17 +3,16 @@ package com.example.friend.GUI
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.friend.Data.FriendRepositoryInDB
 import com.example.friend.R
@@ -46,6 +45,10 @@ class DetailsActivity : AppCompatActivity(){
             val friendBest: CheckBox = findViewById(R.id.bestFriend)
             val saveFriend: Button = findViewById(R.id.saveFriend)
             val deleteFriend: Button = findViewById(R.id.deleteFriend)
+            val callFriend: ImageButton = findViewById(R.id.callButton)
+            val messageFriend: ImageButton = findViewById(R.id.messageButton)
+            val emailButton: ImageButton = findViewById(R.id.emailButton)
+            val websiteButton: ImageButton = findViewById(R.id.websiteButton)
             val nameObserver = Observer<BEFriend> { friend ->
                 friendName.text = friend.name;
                 friendNumber.text = friend.phone;
@@ -55,6 +58,10 @@ class DetailsActivity : AppCompatActivity(){
             }
             saveFriend.text = "Update Friend"
             deleteFriend.visibility = View.VISIBLE
+            callFriend.visibility = View.VISIBLE
+            messageFriend.visibility = View.VISIBLE
+            emailButton.visibility = View.VISIBLE
+            websiteButton.visibility = View.VISIBLE
             mRep.getById(position).observe(this, nameObserver)
         }
     }
@@ -137,6 +144,42 @@ class DetailsActivity : AppCompatActivity(){
         )
         mRep.delete(friend)
         finish()
+    }
+
+    fun onClickCall(view: View){
+        val friendNumber: TextView = findViewById(R.id.friendPhone)
+        val intent = Intent(Intent.ACTION_DIAL)
+        intent.data = Uri.parse("tel:${friendNumber.text}")
+        startActivity(intent)
+    }
+
+    fun onClickEmail(view: View) {
+        val friendEmail: TextView = findViewById(R.id.friendEmail)
+        val emailIntent = Intent(Intent.ACTION_SEND)
+        emailIntent.type="plain/text"
+        val receivers = arrayOf("${friendEmail.text}")
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, receivers)
+        emailIntent.putExtra(Intent.EXTRA_TEXT,
+            "Hey, this email is sent to you by the app I just created")
+        startActivity(emailIntent)
+    }
+
+    fun onClickWebsite(view: View){
+        val friendWebsite: TextView = findViewById(R.id.friendWebsite)
+        var url="${friendWebsite.text}"
+        if (!url.startsWith("http://") && !url.startsWith("https://"))
+            url = "http://" + url;
+        val i = Intent(Intent.ACTION_VIEW)
+        i.data =Uri.parse(url)
+        startActivity(i)
+    }
+
+    fun onClickMessage(view: View){
+        val friendNumber: TextView = findViewById(R.id.friendPhone)
+        val sendIntent = Intent(Intent.ACTION_VIEW)
+        sendIntent.data=Uri.parse("sms:${friendNumber.text}")
+        sendIntent.putExtra("sms_body", "This is magic!")
+        startActivity(sendIntent)
     }
 
     @SuppressLint("MissingPermission")
