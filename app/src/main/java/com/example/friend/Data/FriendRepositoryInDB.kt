@@ -27,7 +27,7 @@ class FriendRepositoryInDB private constructor(private val context: Context) {
         executor.execute { friendDao.insert(f) }
     }
 
-    fun udate(f: BEFriend){
+    fun update(f: BEFriend){
         executor.execute{ friendDao.update(f)}
     }
 
