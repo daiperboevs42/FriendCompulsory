@@ -71,6 +71,24 @@
                 android:ems="10"
                 android:inputType="phone" />
 
+            <ImageButton
+                android:id="@+id/callButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onClickCall"
+                app:srcCompat="@android:drawable/ic_menu_call"
+                android:visibility="gone"/>
+
+            <ImageButton
+                android:id="@+id/messageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onClickMessage"
+                app:srcCompat="@android:drawable/sym_action_chat"
+                android:visibility="gone"/>
+
         </LinearLayout>
 
         <LinearLayout
@@ -105,6 +123,14 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="textPersonName" />
+
+            <ImageButton
+                android:id="@+id/emailButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onClickEmail"
+                app:srcCompat="@android:drawable/sym_action_email"
+                android:visibility="gone"/>
         </LinearLayout>
 
         <LinearLayout
@@ -125,6 +151,14 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="textPersonName" />
+
+            <ImageButton
+                android:id="@+id/websiteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onClickWebsite"
+                app:srcCompat="@android:drawable/ic_dialog_info"
+                android:visibility="gone"/>
         </LinearLayout>
 
         <LinearLayout
