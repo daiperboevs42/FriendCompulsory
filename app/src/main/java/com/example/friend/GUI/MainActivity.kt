@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
         //inserts test data
+    //NOTE! Start with the method uncommented, but make sure you dont open the mainActivity again before removing it! it'll keep making the same data each time!
     private fun insertTestData() {
         val mRep = FriendRepositoryInDB.get()
         mRep.insert(BEFriend(0,"Rip", "01040705", "West Philadelphia","stranger@email.com","github.com/stranger",null, true))
