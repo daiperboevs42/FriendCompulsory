@@ -67,12 +67,15 @@ class DetailsActivity : AppCompatActivity(){
             val messageFriend: ImageButton = findViewById(R.id.messageButton)
             val emailButton: ImageButton = findViewById(R.id.emailButton)
             val websiteButton: ImageButton = findViewById(R.id.websiteButton)
+            val mImage = findViewById<ImageView>(R.id.imgView)
             val nameObserver = Observer<BEFriend> { friend ->
                 friendName.text = friend.name;
                 friendNumber.text = friend.phone;
                 friendEmail.text = friend.email;
                 friendWebsite.text = friend.website;
                 friendBest.isChecked = friend.isFavorite;
+                if(friend.photoPath != null)
+                mImage.setImageURI(Uri.parse(friend.photoPath))
             }
             saveFriend.text = "Update Friend"
             deleteFriend.visibility = View.VISIBLE
@@ -130,14 +133,17 @@ class DetailsActivity : AppCompatActivity(){
         val friend = BEFriend(friendID,
             friendName.text.toString(),
             friendNumber.text.toString(),
+                "address",
             friendEmail.text.toString(),
             friendWebsite.text.toString(),
+                mFile?.absolutePath,
             friendBest.isChecked,
             )
 
         if (friendLoaded){
             mRep.update(friend)
             Toast.makeText(this, "${friend.name} has been updated", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "${mFile?.absolutePath}", Toast.LENGTH_SHORT).show()
             finish()
         }else{
             mRep.insert(friend)
@@ -154,11 +160,13 @@ class DetailsActivity : AppCompatActivity(){
         val friendWebsite: TextView = findViewById(R.id.friendWebsite)
         val friendBest: CheckBox = findViewById(R.id.bestFriend)
         val friend = BEFriend(friendID,
-            friendName.text.toString(),
-            friendNumber.text.toString(),
-            friendEmail.text.toString(),
-            friendWebsite.text.toString(),
-            friendBest.isChecked,
+                friendName.text.toString(),
+                friendNumber.text.toString(),
+                "address",
+                friendEmail.text.toString(),
+                friendWebsite.text.toString(),
+                mFile?.absolutePath,
+                friendBest.isChecked,
         )
         mRep.delete(friend)
         finish()
@@ -260,8 +268,10 @@ class DetailsActivity : AppCompatActivity(){
         when (requestCode) {
 
             CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_BY_FILE ->
-                if (resultCode == RESULT_OK)
+                if (resultCode == RESULT_OK) {
                     showImageFromFile(mImage, tvImageInfo, mFile!!)
+                    Toast.makeText(this, "Update so save image", Toast.LENGTH_SHORT).show()
+                }
                 else handleOther(resultCode)
         }
     }
