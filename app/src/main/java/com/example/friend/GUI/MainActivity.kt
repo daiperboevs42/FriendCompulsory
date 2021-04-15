@@ -22,12 +22,12 @@ class MainActivity : AppCompatActivity() {
         //insertTestData()
         setupDataObserver()
     }
-
+        //creates and inflates the top menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu);
         return true;
     }
-
+        //handles when the menu buttons are being pressed
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id: Int = item.getItemId()
         when (id) {
@@ -46,15 +46,16 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
+        //inserts test data
     private fun insertTestData() {
         val mRep = FriendRepositoryInDB.get()
         mRep.insert(BEFriend(0,"Rip", "01040705", "West Philadelphia","stranger@email.com","github.com/stranger",null, true))
         mRep.insert(BEFriend(0,"Rap", "01010101", "That Street 420","stranger@email.com","github.com/stranger", null,false))
         mRep.insert(BEFriend(0,"Rup", "10101010", "The Other Street 62","stranger@email.com","github.com/stranger", null,false))
     }
-    var cache: List<BEFriend>? = null;
 
+    //sets up the listView with all friends from the DB with Observers
+    var cache: List<BEFriend>? = null;
     private fun setupDataObserver() {
         val lvNames = findViewById<ListView>(R.id.lvNames)
         val mRep = FriendRepositoryInDB.get()
@@ -72,7 +73,7 @@ class MainActivity : AppCompatActivity() {
         lvNames.onItemClickListener = AdapterView.OnItemClickListener {_,_,pos,_ -> onClickFriend(pos)}
     }
 
-
+    //opens detailView when pressing a specific friend
     private fun onClickFriend(pos: Int) {
         val id = cache!![pos].id
         val friendObserver = Observer<BEFriend> { friend ->
@@ -88,6 +89,7 @@ class MainActivity : AppCompatActivity() {
         mRep.getById(id).observeOnce(this, friendObserver)
     }
 
+    //clears the entire DB of Friend entities
     fun onClickClear(view: View) {
         val mRep = FriendRepositoryInDB.get()
         mRep.clear()

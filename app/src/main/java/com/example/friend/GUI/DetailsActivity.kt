@@ -50,7 +50,7 @@ class DetailsActivity : AppCompatActivity(){
         back.setOnClickListener{
             finish()
         }
-
+        //gets the ID of the selected friend and fills in the information from the DB
         val position = intent.getIntExtra("position", -1)
         if (position >= 0) {
             friendLoaded = true
@@ -77,6 +77,7 @@ class DetailsActivity : AppCompatActivity(){
                 if(friend.photoPath != null)
                 mImage.setImageURI(Uri.parse(friend.photoPath))
             }
+            //Changes the stage to show options only available to created friends
             saveFriend.text = "Update Friend"
             deleteFriend.visibility = View.VISIBLE
             callFriend.visibility = View.VISIBLE
@@ -86,26 +87,26 @@ class DetailsActivity : AppCompatActivity(){
             mRep.getById(position).observe(this, nameObserver)
         }
     }
-
+    //requests permissions if not given
     private fun requestPermission(){
         if(!isPermissionGiven()){
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
                 requestPermissions(permissions, 1)
         }
     }
-
+    //checks if permissions are given
     private fun isPermissionGiven(): Boolean {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             return permissions.all {p -> checkSelfPermission(p) == PackageManager.PERMISSION_GRANTED}
         }
         return true
     }
-
+    //creates and inflates the top menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu);
         return true;
     }
-
+    //handles when the menu buttons are being pressed
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id: Int = item.getItemId()
         when (id) {
@@ -122,7 +123,7 @@ class DetailsActivity : AppCompatActivity(){
         }
         return super.onOptionsItemSelected(item)
     }
-
+    //Saves a friend entity with info from all fields
      fun onClickSaveFriend(view: View) {
         val mRep = FriendRepositoryInDB.get()
         val friendName: TextView = findViewById(R.id.friendName)
@@ -139,11 +140,10 @@ class DetailsActivity : AppCompatActivity(){
                 mFile?.absolutePath,
             friendBest.isChecked,
             )
-
+        //if Friend was already created, update instead
         if (friendLoaded){
             mRep.update(friend)
             Toast.makeText(this, "${friend.name} has been updated", Toast.LENGTH_SHORT).show()
-            Toast.makeText(this, "${mFile?.absolutePath}", Toast.LENGTH_SHORT).show()
             finish()
         }else{
             mRep.insert(friend)
@@ -151,7 +151,7 @@ class DetailsActivity : AppCompatActivity(){
             finish()
         }
     }
-
+    //deletes created friend entity from DB
     fun onClickDeleteFriend(view: View){
         val mRep = FriendRepositoryInDB.get()
         val friendName: TextView = findViewById(R.id.friendName)
@@ -171,14 +171,14 @@ class DetailsActivity : AppCompatActivity(){
         mRep.delete(friend)
         finish()
     }
-
+    //opens view to call number in the PHONENUMBER field
     fun onClickCall(view: View){
         val friendNumber: TextView = findViewById(R.id.friendPhone)
         val intent = Intent(Intent.ACTION_DIAL)
         intent.data = Uri.parse("tel:${friendNumber.text}")
         startActivity(intent)
     }
-
+    //opens email view with email from EMAIL field
     fun onClickEmail(view: View) {
         val friendEmail: TextView = findViewById(R.id.friendEmail)
         val emailIntent = Intent(Intent.ACTION_SEND)
@@ -189,7 +189,7 @@ class DetailsActivity : AppCompatActivity(){
             "Hey, this email is sent to you by the app I just created")
         startActivity(emailIntent)
     }
-
+    //opens website from the WEBSITE field
     fun onClickWebsite(view: View){
         val friendWebsite: TextView = findViewById(R.id.friendWebsite)
         var url="${friendWebsite.text}"
@@ -199,7 +199,7 @@ class DetailsActivity : AppCompatActivity(){
         i.data =Uri.parse(url)
         startActivity(i)
     }
-
+    //opens Message view with phonenumber from PHONENUMBER field
     fun onClickMessage(view: View){
         val friendNumber: TextView = findViewById(R.id.friendPhone)
         val sendIntent = Intent(Intent.ACTION_VIEW)
@@ -290,7 +290,8 @@ class DetailsActivity : AppCompatActivity(){
 
     }
 
-
+    //Gets current location of user when pressing the button
+    //TODO: Finish so location is stored on BE
     @SuppressLint("MissingPermission")
     fun onClickLocation(view: View){
         if (!isPermissionGiven()){
