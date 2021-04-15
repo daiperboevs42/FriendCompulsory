@@ -201,5 +201,26 @@
             android:text="Delete Friend"
             android:visibility="gone"/>
 
+        <Button
+            android:id="@+id/btnByFile"
+            android:onClick="onTakeAsFile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Take a photo"/>
+
+        <ImageView
+            android:id="@+id/imgView"
+            android:layout_width="120dp"
+            android:layout_height="100dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/face" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Filename..."
+            android:id="@+id/tvImageInfo"
+            android:layout_centerHorizontal="true" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
