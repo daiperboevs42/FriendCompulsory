@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="3dp"
                 android:text="Friend"
 
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
@@ -32,29 +32,53 @@
                 style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="230dp"
+                android:layout_marginStart="190dp"
                 android:text="Back" />
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgView"
+            android:layout_width="120dp"
+            android:layout_height="100dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:layout_gravity="center"
+            android:src="@drawable/face" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Filename..."
+            android:layout_gravity="center"
+            android:id="@+id/tvImageInfo"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:id="@+id/btnByFile"
+            android:onClick="onTakeAsFile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Take a photo"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="3dp"
-                android:text="Name:"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:hint="Name"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <com.google.android.material.textfield.TextInputEditText
 
-            <EditText
                 android:id="@+id/friendName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="textPersonName" />
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 
@@ -63,36 +87,42 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                android:text="Number:"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-            <EditText
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:hint="Number"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/friendPhone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="phone" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <ImageButton
                 android:id="@+id/callButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="10dp"
+                android:layout_height="60dp"
                 android:layout_weight="1"
                 android:onClick="onClickCall"
-                app:srcCompat="@android:drawable/ic_menu_call"
+                android:src="@android:drawable/ic_menu_call"
+                android:background="?android:attr/selectableItemBackground"
                 android:visibility="gone"/>
 
             <ImageButton
                 android:id="@+id/messageButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="10dp"
+                android:layout_height="60dp"
                 android:layout_weight="1"
                 android:onClick="onClickMessage"
-                app:srcCompat="@android:drawable/sym_action_chat"
+
+                android:src="@android:drawable/sym_action_chat"
+                android:background="?android:attr/selectableItemBackground"
                 android:visibility="gone"/>
 
         </LinearLayout>
@@ -102,12 +132,27 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:text="Birthday:"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:hint="Date of birth"
+                app:helperTextEnabled="true"
+                app:helperText="Date,month,year"
+                app:helperTextTextColor="@color/purple_500"
+               style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/birthday"
+                    android:layout_width="260dp"
+                    android:layout_height="wrap_content"
+
+                    android:inputType="textPersonName" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
 
         </LinearLayout>
 
@@ -116,26 +161,30 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                android:text="Email:"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-            <EditText
-                android:id="@+id/friendEmail"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:hint="Email"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/friendEmail"
+                android:layout_width="340dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="textPersonName" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <ImageButton
                 android:id="@+id/emailButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:onClick="onClickEmail"
-                app:srcCompat="@android:drawable/sym_action_email"
+                android:src="@android:drawable/sym_action_email"
+                android:background="?android:attr/selectableItemBackground"
                 android:visibility="gone"/>
         </LinearLayout>
 
@@ -144,26 +193,30 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                android:text="Website:"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="340dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:hint="Website"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-            <EditText
+
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/friendWebsite"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="textPersonName" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <ImageButton
                 android:id="@+id/websiteButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:onClick="onClickWebsite"
-                app:srcCompat="@android:drawable/ic_dialog_info"
+                android:src="@android:drawable/ic_dialog_info"
+                android:background="?android:attr/selectableItemBackground"
                 android:visibility="gone"/>
         </LinearLayout>
 
@@ -173,10 +226,12 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="120dp"
                 android:layout_height="30dp"
+                android:layout_marginStart="5dp"
                 android:text="Best Friend:"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:textSize="20dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" />
 
             <CheckBox
                 android:id="@+id/bestFriend"
@@ -186,47 +241,27 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/getLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="onClickLocation"
-            android:text="Get Location" />
-
-        <Button
             android:id="@+id/saveFriend"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="60dp"
             android:onClick="onClickSaveFriend"
             android:text="Save Friend" />
 
         <Button
             android:id="@+id/deleteFriend"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Button.Icon"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_gravity="bottom|left"
+            android:layout_marginTop="-60dp"
             android:onClick="onClickDeleteFriend"
-            android:text="Delete Friend"
+            app:icon="@drawable/delete"
             android:visibility="gone"/>
 
-        <Button
-            android:id="@+id/btnByFile"
-            android:onClick="onTakeAsFile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Take a photo"/>
-
-        <ImageView
-            android:id="@+id/imgView"
-            android:layout_width="120dp"
-            android:layout_height="100dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:src="@drawable/face" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Filename..."
-            android:id="@+id/tvImageInfo"
-            android:layout_centerHorizontal="true" />
 
     </LinearLayout>
+
+
 </RelativeLayout>

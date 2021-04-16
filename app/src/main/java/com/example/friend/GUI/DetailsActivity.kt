@@ -28,7 +28,12 @@ import java.io.File
 import android.Manifest.permission.CAMERA
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.Manifest.permission_group.CAMERA
+import androidx.annotation.RequiresApi
+import java.sql.Time
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class DetailsActivity : AppCompatActivity(){
@@ -67,6 +72,7 @@ class DetailsActivity : AppCompatActivity(){
             val messageFriend: ImageButton = findViewById(R.id.messageButton)
             val emailButton: ImageButton = findViewById(R.id.emailButton)
             val websiteButton: ImageButton = findViewById(R.id.websiteButton)
+
             val nameObserver = Observer<BEFriend> { friend ->
                 friendName.text = friend.name;
                 friendNumber.text = friend.phone;
@@ -120,6 +126,7 @@ class DetailsActivity : AppCompatActivity(){
         return super.onOptionsItemSelected(item)
     }
 
+     @RequiresApi(Build.VERSION_CODES.O)
      fun onClickSaveFriend(view: View) {
         val mRep = FriendRepositoryInDB.get()
         val friendName: TextView = findViewById(R.id.friendName)
@@ -127,11 +134,15 @@ class DetailsActivity : AppCompatActivity(){
         val friendEmail: TextView = findViewById(R.id.friendEmail)
         val friendWebsite: TextView = findViewById(R.id.friendWebsite)
         val friendBest: CheckBox = findViewById(R.id.bestFriend)
+        // val date = LocalDate.parse(findViewById(R.id.birthday))
+        // val zoneId = ZoneId.systemDefault() // or: ZoneId.of("Europe/Oslo");
+        // val epoch = date.atStartOfDay(zoneId).toEpochSecond()
         val friend = BEFriend(friendID,
             friendName.text.toString(),
             friendNumber.text.toString(),
             friendEmail.text.toString(),
             friendWebsite.text.toString(),
+             //   epoch,
             friendBest.isChecked,
             )
 
@@ -146,6 +157,7 @@ class DetailsActivity : AppCompatActivity(){
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun onClickDeleteFriend(view: View){
         val mRep = FriendRepositoryInDB.get()
         val friendName: TextView = findViewById(R.id.friendName)
@@ -153,11 +165,15 @@ class DetailsActivity : AppCompatActivity(){
         val friendEmail: TextView = findViewById(R.id.friendEmail)
         val friendWebsite: TextView = findViewById(R.id.friendWebsite)
         val friendBest: CheckBox = findViewById(R.id.bestFriend)
+       // val date = LocalDate.parse(findViewById(R.id.birthday))
+      //  val zoneId = ZoneId.systemDefault() // or: ZoneId.of("Europe/Oslo");
+      //  val epoch = date.atStartOfDay(zoneId).toEpochSecond()
         val friend = BEFriend(friendID,
             friendName.text.toString(),
             friendNumber.text.toString(),
             friendEmail.text.toString(),
             friendWebsite.text.toString(),
+              //  epoch,
             friendBest.isChecked,
         )
         mRep.delete(friend)
