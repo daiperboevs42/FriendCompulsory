@@ -2,6 +2,9 @@ package com.example.friend.Data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.sql.Date
+import java.sql.Time
+import java.time.LocalDate
 import java.util.*
 
 @Entity
@@ -12,5 +15,6 @@ data class BEFriend(
         var email: String,
         var website: String,
         var photoPath: String?,
+       // var birthday: Long,
         var isFavorite: Boolean){
 }
