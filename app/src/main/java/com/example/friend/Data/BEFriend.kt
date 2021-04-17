@@ -14,7 +14,6 @@ data class BEFriend(
         var phone: String,
         var email: String,
         var website: String,
-        var photoPath: String?,
        // var birthday: Long,
         var isFavorite: Boolean){
 }
