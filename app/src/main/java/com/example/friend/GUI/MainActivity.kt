@@ -22,12 +22,12 @@ class MainActivity : AppCompatActivity() {
         //insertTestData()
         setupDataObserver()
     }
-        //creates and inflates the top menu
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu);
         return true;
     }
-        //handles when the menu buttons are being pressed
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id: Int = item.getItemId()
         when (id) {
@@ -46,17 +46,15 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-        //inserts test data
-    //NOTE! Start with the method uncommented, but make sure you dont open the mainActivity again before removing it! it'll keep making the same data each time!
+
     private fun insertTestData() {
         val mRep = FriendRepositoryInDB.get()
-        mRep.insert(BEFriend(0,"Rip", "01040705","stranger@email.com","github.com/stranger",null, true))
-        mRep.insert(BEFriend(0,"Rap", "01010101","stranger@email.com","github.com/stranger", null,false))
-        mRep.insert(BEFriend(0,"Rup", "10101010","stranger@email.com","github.com/stranger", null,false))
+        mRep.insert(BEFriend(0,"Rip", "01040705", "stranger@email.com","github.com/stranger", true))
+        mRep.insert(BEFriend(0,"Rap", "01010101", "stranger@email.com","github.com/stranger",false))
+        mRep.insert(BEFriend(0,"Rup", "10101010", "stranger@email.com","github.com/stranger",false))
     }
-
-    //sets up the listView with all friends from the DB with Observers
     var cache: List<BEFriend>? = null;
+
     private fun setupDataObserver() {
         val lvNames = findViewById<ListView>(R.id.lvNames)
         val mRep = FriendRepositoryInDB.get()
@@ -74,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         lvNames.onItemClickListener = AdapterView.OnItemClickListener {_,_,pos,_ -> onClickFriend(pos)}
     }
 
-    //opens detailView when pressing a specific friend
+
     private fun onClickFriend(pos: Int) {
         val id = cache!![pos].id
         val friendObserver = Observer<BEFriend> { friend ->
@@ -90,7 +88,6 @@ class MainActivity : AppCompatActivity() {
         mRep.getById(id).observeOnce(this, friendObserver)
     }
 
-    //clears the entire DB of Friend entities
     fun onClickClear(view: View) {
         val mRep = FriendRepositoryInDB.get()
         mRep.clear()
